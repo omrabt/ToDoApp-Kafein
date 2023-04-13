@@ -10,7 +10,6 @@ namespace Entities.Concrete
         public string AssignmentName { get; set; }
         public int AssignmentStatus { get; set; }
         public int UserId { get; set; }
-        public byte[] UserToken { get; set; }
         public string? UserComment { get; set; }
 
     }

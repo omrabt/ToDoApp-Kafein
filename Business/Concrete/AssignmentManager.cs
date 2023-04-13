@@ -2,6 +2,7 @@
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFrameWork;
 using Entities.Concrete;
 
 namespace Business.Concrete
@@ -9,6 +10,10 @@ namespace Business.Concrete
     public class AssignmentManager : IAssignmentService
     {
         IAssignmentDal _assignmentDal;
+        public AssignmentManager()
+        {
+            _assignmentDal = new EfAssignmentDal();
+        }
         public IResult Add(Assignment assignment)
         {
             _assignmentDal.Add(assignment);

@@ -5,11 +5,13 @@ namespace DataAccess.Concrete.EntityFrameWork
 {
     public class ToDoAppContext:DbContext
     {
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ToDoApp;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ToDoApp;Trusted_Connection=true;TrustServerCertificate=true;");
         }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
     }
 }
