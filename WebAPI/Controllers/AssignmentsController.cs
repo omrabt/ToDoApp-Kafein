@@ -1,9 +1,11 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebAPI.Controllers
 {
@@ -19,9 +21,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll(int userId)
+        public IActionResult GetAll()
         {
-            var result = _assignmentService.GetAll(userId);
+            var result = _assignmentService.GetAll(UserId());
             if (result.Success)
             {
                 return Ok(result);
@@ -29,8 +31,16 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpPost("add")]
-        public IActionResult Add(Assignment assignment)
+        public IActionResult Add(AddUpdateRequestDto addUpdateRequestDto)
         {
+            var assignment = new Assignment
+            {
+                AssignmentId = addUpdateRequestDto.AssignmentId,
+                AssignmentName = addUpdateRequestDto.AssignmentName,
+                AssignmentStatus = addUpdateRequestDto.AssignmentStatus,
+                UserId = UserId(),
+                UserComment = addUpdateRequestDto.UserComment
+            };
             var result = _assignmentService.Add(assignment);
             if (result.Success)
             {
@@ -41,8 +51,17 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Assignment assignment)
+        public IActionResult Update(AddUpdateRequestDto addUpdateRequestDto)
         {
+            var assignment = new Assignment
+            {
+                AssignmentId = addUpdateRequestDto.AssignmentId,
+                AssignmentName = addUpdateRequestDto.AssignmentName,
+                AssignmentStatus = addUpdateRequestDto.AssignmentStatus,
+                UserId = UserId(),
+                UserComment = addUpdateRequestDto.UserComment
+            };
+
             var result = _assignmentService.Update(assignment);
             if (result.Success)
             {
@@ -61,5 +80,12 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        private int UserId()
+        {
+            string userIdStr = User.FindFirst(ClaimTypes.Name)?.Value;
+            int userId = 0;
+           Int32.TryParse(userIdStr, out userId);
+            return userId;
+        }
     }
 }

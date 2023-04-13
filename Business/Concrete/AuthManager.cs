@@ -26,7 +26,7 @@ namespace Business.Concrete
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserEmail)
+                new Claim(ClaimTypes.Name, user.UserId.ToString())
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("my_top_secret_key"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

@@ -22,18 +22,28 @@ namespace Business.Concrete
 
         public IResult Delete(Assignment assignment)
         {
+            var assignmentExist = _assignmentDal.Get(p => p.AssignmentId == assignment.AssignmentId);
+            if (assignmentExist == null)
+            {
+                return new ErrorResult(Messages.AssignmentDoesNotExist);
+            }
             _assignmentDal.Delete(assignment);
             return new SuccessResult(Messages.AssignmentDeleted);
         }
 
 
         public IDataResult<List<Assignment>> GetAll(int userId)
-        {
+        {   
            return new SuccessDataResult<List<Assignment>>(_assignmentDal.GetAll(p=> p.UserId == userId),Messages.AssignmentListed);
         }
 
         public IResult Update(Assignment assignment)
         {
+            var assignmentExist = _assignmentDal.Get(p => p.AssignmentId == assignment.AssignmentId);
+            if (assignmentExist == null)
+            {
+                return new ErrorResult(Messages.AssignmentDoesNotExist);
+            }
             _assignmentDal.Update(assignment);
             return new SuccessResult(Messages.AssignmentUpdated);
         }

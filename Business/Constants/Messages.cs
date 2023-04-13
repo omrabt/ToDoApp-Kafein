@@ -12,7 +12,8 @@ namespace Business.Constants
         public static string AssignmentAdded = "Assignment Added";
         public static string AssignmentDeleted = "Assignment Deleted";
         public static string AssignmentUpdated = "Assignment Updated";
-        public static string AssignmentListed = "Assignmen t Listed";
+        public static string AssignmentListed = "Assignment Listed";
+        public static string AssignmentDoesNotExist = "AssignmentDoesNotExist";
 
         public static string UserRegistered = "User Registered";
 
